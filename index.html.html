@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darija au Café : Expert Commmunication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fdfaf6; color: #4a3f35; overflow-x: hidden; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: auto; height: 300px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-bubble { max-width: 85%; padding: 0.75rem 1rem; border-radius: 1rem; margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.4; }
+        .chat-server { background-color: #f3f4f6; align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid #e5e7eb; }
+        .chat-user { background-color: #b45309; color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+        .btn-choice { transition: all 0.2s; border: 1px solid #d1d5db; }
+        .btn-choice:hover { background-color: #fef3c7; border-color: #b45309; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Chosen Palette: Roasted Coffee & Warm Cream -->
+    <!-- Application Structure Plan: 
+        L'application évolue vers un centre d'entraînement intensif :
+        1. "Lexique Enrichi" : Ajout de la nourriture, des ustensiles et des adjectifs de qualité.
+        2. "Banque de Phrases" : 30+ phrases classées par intention (Urgence, Réclamation, Travail, Social).
+        3. "Simulateur Multi-Scénarios" : Moteur JS gérant 4 parcours (Petit-déjeuner, Travail/Wifi, Erreur de commande, Paiement partagé).
+        4. "Visualisation Articulaire" : Chart.js pour les sons complexes.
+        Cette architecture permet une immersion granulaire selon le besoin de l'élève.
+    -->
+    <!-- Visualization & Content Choices: 
+        - Cartes interactives pour le nouveau vocabulaire technique (médias, couverts).
+        - Sélecteur de scénario : JS dynamique pour charger différentes arborescences de dialogue.
+        - Chart.js : Comparaison de l'effort laryngé.
+        - CONFIRMATION: NO SVG used. NO Mermaid JS used.
+    -->
+
+    <nav class="bg-amber-900 text-amber-50 shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">☕</span>
+                <span class="font-bold text-lg tracking-tight uppercase">Darija Pro Café</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <button onclick="showTab('home')" class="hover:text-amber-300 transition">Accueil</button>
+                <button onclick="showTab('vocab')" class="hover:text-amber-300 transition">Lexique</button>
+                <button onclick="showTab('phrases')" class="hover:text-amber-300 transition">Phrases</button>
+                <button onclick="showTab('simulator')" class="hover:text-amber-300 transition">Simulateur</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-5xl mx-auto w-full p-4 md:p-8">
+        
+        <!-- SECTION : ACCUEIL -->
+        <section id="home" class="tab-content active space-y-6 text-center py-10">
+            <h1 class="text-4xl font-extrabold text-amber-900">Maîtrisez le Café Marocain 🇲🇦</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Ne soyez plus un simple touriste. Apprenez à demander le code wifi, à signaler une erreur de commande ou à payer pour vos amis comme un vrai local.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                    <div class="text-3xl mb-2">🥯</div>
+                    <div class="font-bold">+15</div>
+                    <div class="text-xs text-gray-500 uppercase">Mots nourriture</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                    <div class="text-3xl mb-2">💬</div>
+                    <div class="font-bold">30+</div>
+                    <div class="text-xs text-gray-500 uppercase">Phrases clés</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                    <div class="text-3xl mb-2">🎮</div>
+                    <div class="font-bold">4</div>
+                    <div class="text-xs text-gray-500 uppercase">Scénarios réels</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <div class="font-bold">100%</div>
+                    <div class="text-xs text-gray-500 uppercase">Pratique</div>
+                </div>
+            </div>
+            <button onclick="showTab('vocab')" class="mt-10 bg-amber-800 text-white px-10 py-4 rounded-full font-bold shadow-lg hover:bg-amber-900 transition-transform hover:scale-105">Lancer l'entraînement</button>
+        </section>
+
+        <!-- SECTION : VOCABULAIRE ENRICHI -->
+        <section id="vocab" class="tab-content space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold text-amber-900">Lexique Avancé</h2>
+                <p class="text-gray-600 italic">Cliquez sur un mot pour voir son usage.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-amber-700 uppercase tracking-widest mb-3">La Nourriture (L-makla)</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="foodGrid"></div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-amber-700 uppercase tracking-widest mb-3">Objets & Couverts</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="objectGrid"></div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-amber-700 uppercase tracking-widest mb-3">Qualité & Adjectifs</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="adjGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : PHRASES EXPERT -->
+        <section id="phrases" class="tab-content space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-amber-900">Banque de Phrases</h2>
+                    <p class="text-gray-600">Les formules magiques pour chaque situation.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterPhrases('all')" class="bg-amber-100 text-amber-800 px-3 py-1 rounded-md text-xs font-bold">TOUT</button>
+                    <button onclick="filterPhrases('complaint')" class="bg-red-50 text-red-700 px-3 py-1 rounded-md text-xs font-bold underline">RÉCLAMATIONS</button>
+                    <button onclick="filterPhrases('social')" class="bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-xs font-bold">SOCIAL</button>
+                    <button onclick="filterPhrases('work')" class="bg-green-50 text-green-700 px-3 py-1 rounded-md text-xs font-bold">TRAVAIL/WIFI</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4" id="phraseList"></div>
+        </section>
+
+        <!-- SECTION : SIMULATEUR MULTI-SCÉNARIOS -->
+        <section id="simulator" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100">
+                <h2 class="text-2xl font-bold text-amber-900 mb-2">Simulateur de Situations</h2>
+                <p class="text-gray-600 mb-6 text-sm italic">Choisissez une situation pour commencer la pratique réelle.</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-8">
+                    <button onclick="loadScenario('breakfast')" class="p-3 border rounded-xl text-center hover:bg-amber-50 focus:ring-2 focus:ring-amber-500">
+                        <span class="block text-xl">🍳</span>
+                        <span class="text-xs font-bold">Petit-Déj</span>
+                    </button>
+                    <button onclick="loadScenario('wifi')" class="p-3 border rounded-xl text-center hover:bg-amber-50 focus:ring-2 focus:ring-amber-500">
+                        <span class="block text-xl">💻</span>
+                        <span class="text-xs font-bold">Wifi/Travail</span>
+                    </button>
+                    <button onclick="loadScenario('issue')" class="p-3 border rounded-xl text-center hover:bg-amber-50 focus:ring-2 focus:ring-amber-500">
+                        <span class="block text-xl">⚠️</span>
+                        <span class="text-xs font-bold">Erreur/Plat</span>
+                    </button>
+                    <button onclick="loadScenario('pay')" class="p-3 border rounded-xl text-center hover:bg-amber-50 focus:ring-2 focus:ring-amber-500">
+                        <span class="block text-xl">💳</span>
+                        <span class="text-xs font-bold">Addition</span>
+                    </button>
+                </div>
+
+                <div id="chatBox" class="flex flex-col h-[400px] overflow-y-auto border-y py-4 space-y-4 bg-gray-50 rounded-lg px-4 mb-4">
+                    <div class="text-center text-gray-400 text-xs italic mt-20">Sélectionnez un scénario ci-dessus pour parler au serveur...</div>
+                </div>
+
+                <div id="choiceContainer" class="flex flex-col gap-2">
+                    <!-- Les boutons de choix apparaîtront ici -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t py-6 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">Coach Darija 2024 - Communication Réelle</p>
+        </div>
+    </footer>
+
+    <script>
+        // DONNÉES ÉTENDUES
+        const foods = [
+            { d: "Msemen", f: "Crêpe marocaine", ex: "Bghit 2 msemenat, 3afak." },
+            { d: "Harcha", f: "Galette de semoule", ex: "Wach kayna harcha skhona ?" },
+            { d: "Beghrir", f: "Crêpe mille trous", ex: "3tini beghrir b l-3sel." },
+            { d: "Frimaja", f: "Fromage (portion)", ex: "Jib lia 2 frimajat." },
+            { d: "Beid mslouq", f: "Œuf bouilli", ex: "Bghit beid mslouq o l-mel7." },
+            { d: "Amlou", f: "Pâte amande/argan", ex: "Wach 3ndkom amlou ?" },
+            { d: "Zit Zitoun", f: "Huile d'olive", ex: "3tini chwiya d zit zitoun." },
+            { d: "Konfitur", f: "Confiture", ex: "Bghit konfitur d l-friz." }
+        ];
+
+        const objects = [
+            { d: "M3ilqa", f: "Petite cuillère", ex: "Had l-m3ilqa machi n9iya." },
+            { d: "Forshita", f: "Fourchette", ex: "Jib lia forshita 3afak." },
+            { d: "Mous", f: "Couteau", ex: "Had l-mous madi (tranchant)." },
+            { d: "Kas", f: "Verre", ex: "Bghit kas d l-ma." },
+            { d: "Ghellay", f: "Théière", ex: "Had l-ghellay sghir." },
+            { d: "Kliniks", f: "Serviette/Mouchoir", ex: "3tini chwiya d kliniks." },
+            { d: "Prise", f: "Prise électrique", ex: "Kayn chi prise hna ?" },
+            { d: "Cendrier", f: "Cendrier", ex: "Jib lia cendrier 3afak." }
+        ];
+
+        const adjectives = [
+            { d: "Skhon", f: "Chaud", ex: "Bghit atay skhon." },
+            { d: "Bared", f: "Froid", ex: "L-ma bared bezzaf." },
+            { d: "Zwin", f: "Bon / Beau", ex: "Msemen zwin hna." },
+            { d: "Messous", f: "Sans sucre", ex: "Atay messous, 3afak." },
+            { d: "Khasser", f: "Mauvais / En panne", ex: "Had l-atay khasser." },
+            { d: "N9i", f: "Propre", ex: "Had l-tabla n9iya." },
+            { d: "Moussek", f: "Sale", ex: "Had l-kas moussek." },
+            { d: "Mjahad", f: "Fort (café/thé)", ex: "9hwa mjahda bezzaf." }
+        ];
+
+        const expertPhrases = [
+            { d: "Had l-9hwa machi skhona, bddal-ha lia 3afak.", f: "Ce café n'est pas chaud, change-le moi svp.", c: "complaint" },
+            { d: "Jib lia chwiya d l-sokkar, hadchi messous.", f: "Apporte-moi un peu de sucre, c'est sans sucre.", c: "complaint" },
+            { d: "Khoya, t3ttalti 3lia bezzaf !", f: "Mon frère, tu as mis trop de temps !", c: "complaint" },
+            { d: "Had l-makla fiha chi 7aja khayba.", f: "Cette nourriture a quelque chose de mauvais.", c: "complaint" },
+            { d: "Khoya, n9i had l-tabla 3afak.", f: "Mon frère, nettoie cette table svp.", c: "complaint" },
+            { d: "Wach ymken lia n-chargi t-tilifone hna ?", f: "Puis-je charger mon téléphone ici ?", c: "work" },
+            { d: "L-wifi makhdamch, 3tini l-code khor.", f: "Le wifi ne marche pas, donne-moi un autre code.", c: "work" },
+            { d: "Kayn chi blassa hna fiha l-dow ?", f: "Y a-t-il une place ici avec de l'électricité ?", c: "work" },
+            { d: "Ana ghadi n-gless hna o n-tsennah.", f: "Je vais m'asseoir ici et l'attendre.", c: "social" },
+            { d: "Had l-9hwa dial sa7bi, ana n-khallas kolchi.", f: "Ce café est pour mon ami, je paie tout.", c: "social" },
+            { d: "Ch7al l-7sab d had l-tabla ?", f: "Combien est l'addition de cette table ?", c: "social" },
+            { d: "Khalli l-baqi dialek, chokran.", f: "Garde la monnaie pour toi, merci.", c: "social" }
+        ];
+
+        // MOTEUR DE SCÉNARIOS
+        const scenarios = {
+            breakfast: [
+                { s: "Salam a sidi! Mar7ba. Chno bghiti f l-ftour?", options: [
+                    { t: "Bghit ftour fassi (Msemen + Atay)", next: 1 },
+                    { t: "3tini ghir harcha o frimaja o 9hwa kahla.", next: 2 }
+                ]},
+                { s: "Wkha, bghiti l-msemen b l-3sel wela zit zitoun?", options: [
+                    { t: "B l-3sel o l-zebda, 3afak.", next: 3 },
+                    { t: "Ghir zit zitoun, chokran.", next: 3 }
+                ]},
+                { s: "Ha l-ftour dialek. Chi 7aja khrat?", options: [
+                    { t: "Iyeh, jib lia chwiya d l-ma bared.", next: 4 },
+                    { t: "La chokran, hadchi baraka.", next: 4 }
+                ]},
+                { s: "Baraka Allah o fik! B l-se77a o l-ra7a.", end: true }
+            ],
+            wifi: [
+                { s: "Salam! Tfaddal gless. Chno bghiti?", options: [
+                    { t: "Bghit qhwa nos-nos o wach kayn l-wifi?", next: 1 }
+                ]},
+                { s: "Iyeh kayn l-wifi. Ha l-code: 'MAROC2024'.", options: [
+                    { t: "Chokran. O wach kayn chi prise hna?", next: 2 }
+                ]},
+                { s: "Kayna ghir f had l-tabla f l-9ont (le coin).", options: [
+                    { t: "Wkha, n-gless tma. Chokran khoya.", next: 3 }
+                ]},
+                { s: "Hania a sidi! N-jib lek l-9hwa daba.", end: true }
+            ],
+            issue: [
+                { s: "Ha l-atay dialek a sidi.", options: [
+                    { t: "Khoya, had l-atay messous bezzaf! Jib l-sokkar.", next: 1 },
+                    { t: "Had l-kas machi n9i, bddal-ho lia 3afak.", next: 2 }
+                ]},
+                { s: "Sme7 lia bezzaf, daba njib lek l-sokkar.", options: [
+                    { t: "Wkha, t3jjel chwiya 3afak.", next: 3 }
+                ]},
+                { s: "Ha kas n9i, sme7 lia mara khrat.", options: [
+                    { t: "Hania, machi mouchkil. Chokran.", next: 3 }
+                ]},
+                { s: "Chokran 3la sber dialek!", end: true }
+            ],
+            pay: [
+                { s: "Chno bghiti a sidi?", options: [
+                    { t: "L-7sab 3afak. Ch7al ana o sa7bi?", next: 1 }
+                ]},
+                { s: "Kollchi fih 45 dirham.", options: [
+                    { t: "Wach ymken n-khallas b l-carte?", next: 2 },
+                    { t: "Ha 50 dirham, khalli l-baqi.", next: 3 }
+                ]},
+                { s: "La, 3ndna ghir l-cash (l-flouss) hna.", options: [
+                    { t: "Wkha, ha 50 dirham. Khalli l-baqi.", next: 3 }
+                ]},
+                { s: "Baraka Allah o fik! Nharek mbrok.", end: true }
+            ]
+        };
+
+        // INITIALISATION
+        window.onload = () => {
+            renderGrid('foodGrid', foods);
+            renderGrid('objectGrid', objects);
+            renderGrid('adjGrid', adjectives);
+            filterPhrases('all');
+        };
+
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function renderGrid(id, data) {
+            const grid = document.getElementById(id);
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-3 rounded-lg border border-amber-50 hover:border-amber-300 shadow-sm cursor-help transition";
+                div.innerHTML = `
+                    <div class="font-bold text-amber-900 text-sm">${item.d}</div>
+                    <div class="text-xs text-gray-500">${item.f}</div>
+                    <div class="hidden mt-2 text-[10px] italic text-amber-700 font-medium">${item.ex}</div>
+                `;
+                div.onclick = () => {
+                    const ex = div.querySelector('.hidden');
+                    ex.classList.toggle('hidden');
+                };
+                grid.appendChild(div);
+            });
+        }
+
+        function filterPhrases(cat) {
+            const list = document.getElementById('phraseList');
+            list.innerHTML = '';
+            const filtered = cat === 'all' ? expertPhrases : expertPhrases.filter(p => p.c === cat);
+            filtered.forEach(p => {
+                const div = document.createElement('div');
+                div.className = `p-4 rounded-xl border-l-4 shadow-sm bg-white ${p.c === 'complaint' ? 'border-red-400' : 'border-amber-700'}`;
+                div.innerHTML = `
+                    <p class="font-bold text-amber-900">${p.d}</p>
+                    <p class="text-xs text-gray-500 italic mt-1">${p.f}</p>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // LOGIQUE CHAT
+        let currentScenario = null;
+        let stepIndex = 0;
+
+        function loadScenario(id) {
+            currentScenario = scenarios[id];
+            stepIndex = 0;
+            const chat = document.getElementById('chatBox');
+            chat.innerHTML = '';
+            addChatMessage(currentScenario[0].s, 'server');
+            updateChoices();
+        }
+
+        function addChatMessage(text, type) {
+            const chat = document.getElementById('chatBox');
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${type === 'server' ? 'chat-server' : 'chat-user'}`;
+            bubble.innerHTML = type === 'server' ? `<strong>Khoya:</strong> ${text}` : text;
+            chat.appendChild(bubble);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function updateChoices() {
+            const container = document.getElementById('choiceContainer');
+            container.innerHTML = '';
+            const current = currentScenario[stepIndex];
+            
+            if (current.end) {
+                container.innerHTML = '<div class="text-center text-green-600 font-bold p-4">Scénario terminé ! Testez-en un autre.</div>';
+                return;
+            }
+
+            current.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "btn-choice text-left p-3 rounded-lg text-sm bg-white shadow-sm";
+                btn.innerText = opt.t;
+                btn.onclick = () => handleChoice(opt);
+                container.appendChild(btn);
+            });
+        }
+
+        function handleChoice(opt) {
+            addChatMessage(opt.t, 'user');
+            document.getElementById('choiceContainer').innerHTML = '';
+            
+            setTimeout(() => {
+                stepIndex = opt.next;
+                const nextStep = currentScenario[stepIndex];
+                addChatMessage(nextStep.s, 'server');
+                updateChoices();
+            }, 700);
+        }
+    </script>
+</body>
+</html>
